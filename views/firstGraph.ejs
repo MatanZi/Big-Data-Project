@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+	
+
+
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="container">
+            <div class="booking-content">
+                 <div id="chartContainer" class="booking-image"></div>
+                <div class="booking-form">
+                    <form action="/graph1" id="myForm" name="myForm" method="POST">
+                        <h2>Profile</h2>
+			
+                        <div class="form-group form-input">
+                            	<label for="bday" >First Date Range:</label>
+                                    <input type="date" id="f_from" name="f_from" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="button date-from">
+                                    <span class="validity"></span>
+                        </div>
+			
+
+			<div class="form-group form-input">
+                                    <input type="date" id="f_to" name="f_to" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="from date" class="button date-to">
+                                    <span class="validity"></span>
+                        </div>
+
+
+			<div class="form-group form-input">
+				    <label for="bday" >Second Date Range:</label>
+                                    <input type="date" id="s_from" name="s_from" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="button date-from">
+                                    <span class="validity"></span>
+                        </div>
+
+
+			<div class="form-group form-input">
+                            	<input type="date" id="s_to" name="s_to" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" value="from date" class="button date-to">
+                                <span class="validity"></span>
+                        </div>
+
+                        <div class="form-group form-input">
+                         	<label for="ccexpm">Product:</label>
+                                    <select id = "ccexpm" name = "ccexpm" class="button product">     
+				    <% for(var i=0; i < dropdownVals.length; i++) { %>
+					<option style="background-color:black"><%= dropdownVals[i] %></option>
+				    <% } %>
+                                </select>
+                        </div>
+
+
+			<div class="form-submit">
+                            		 <button type="submit" value="submit" onclick="gData(); return false" class="submit">Submit</button>
+
+                      	</div>
+		
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+<script src="../Chart.js"></script>
+<script>
+  // code to draw graph
+	
+   function gData() {
+	
+    $.post("http://localhost:3000/graph1",  $('#myForm').serialize() ,function(result, status) {
+	
+		var chart = new CanvasJS.Chart("chartContainer", {
+		animationEnabled: true,
+		title:{
+			text: result[2].toString() + " Prices in different dates"
+		},
+		axisY: {
+			title: "Markets"
+		},
+		legend: {
+			cursor:"pointer",
+			itemclick : toggleDataSeries
+		},
+		toolTip: {
+			shared: true,
+			content: toolTipFormatter
+		},
+		data: [{
+			type: "bar",
+			showInLegend: true,
+			name: "First Date",
+			color: "gold",
+			dataPoints: [
+				{ y: result[0][0], label: "AM:PM" },
+				{ y: result[0][1], label: "Shufersal" },
+				{ y: result[0][2], label: "Osher Ad" },
+				{ y: result[0][3], label: "Mega Bair" }
+			]
+		},
+		{
+			type: "bar",
+			showInLegend: true,
+			name: "Second Date",
+			color: "silver",
+			dataPoints: [
+				{ y: result[1][0], label: "AM:PM" },
+				{ y: result[1][1], label: "Shufersal" },
+				{ y: result[1][2], label: "Osher Ad" },
+				{ y: result[1][3], label: "Mega Bair" }
+			]
+		}]
+	});				
+	chart.render();
+
+	function toolTipFormatter(e) {
+		var str = "";
+		var total = 0 ;
+		var str3;
+		var str2 ;
+		for (var i = 0; i < e.entries.length; i++){
+			var str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\">" + e.entries[i].dataSeries.name + "</span>: <strong>"+  e.entries[i].dataPoint.y + "</strong> <br/>" ;
+			total = e.entries[i].dataPoint.y + total;
+			str = str.concat(str1);
+		}
+		str2 = "<strong>" + e.entries[0].dataPoint.label + "</strong> <br/>";
+		str3 = "<span style = \"color:Tomato\">Total: </span><strong>" + total + "</strong><br/>";
+		return (str2.concat(str));
+	}
+
+	function toggleDataSeries(e) {
+		if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			e.dataSeries.visible = false;
+		}
+		else {
+			e.dataSeries.visible = true;
+		}
+		chart.render();
+	}
+
+
+    });
+
+ }
+
+
+
+</script>
+
+
+
+
+
+
+</html>
