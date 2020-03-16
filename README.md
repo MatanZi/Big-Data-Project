@@ -1,10 +1,20 @@
-# Node.js-Register-Login-App
+# Big-Data-Project
+Big Data solution for supermarkets and customers, the main purpose of this system is to analysis and display the diffrent products prices in sevral supermarkets.
 
-This is a user login and registration app using Node.js, Express, Mongoose and express-sessions.
+## Technology:
+1) MongoDB
+2) Redis
+3) REST-API
+4) FileSystem
 
-## Getting Started
+### Program lang:
+1) Node-JS
+2) JavaScript
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. :heart:
+### Requirements:
+1) sudo utils/install_server.sh - install redis
+2) /etc/init.d/redis_6379 status - check redis status
+3) sudo apt install -y mongodb - install mongodb
 
 ### Prerequisites
 
@@ -22,6 +32,4 @@ nodemon server.js
 
 Code is Running on 
 + http://localhost:3000/
-
-:heart_eyes: Thanks
 
