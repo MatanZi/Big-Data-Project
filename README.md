@@ -1,7 +1,7 @@
 # Big-Data-Project
 Big Data solution for supermarkets and customers, the main purpose of this system is to analysis and display the diffrent products prices in sevral supermarkets.
 
-## Technology:
+### Technology:
 1) MongoDB
 2) Redis
 3) REST-API
